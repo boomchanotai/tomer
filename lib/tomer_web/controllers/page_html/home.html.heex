@@ -3,6 +3,8 @@
     <span id="time-text" class="text-9xl" style="font-size: 8rem; line-height: 1;">
       0
     </span>
-    <button id="btn">addTime</button>
+    <%= if @isAdmin do %>
+      <button id="btn">addTime</button>
+    <% end %>
   </div>
 </main>

@@ -18,6 +18,7 @@ defmodule TomerWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/admin", PageController, :admin
   end
 
   # Other scopes may use custom stacks.
