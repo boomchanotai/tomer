@@ -10,7 +10,8 @@
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <%= if @isAdmin do %>
       <script>
-        window.secretKey = prompt("Secret key")
+        <%!-- window.secretKey = prompt("Secret key") --%>
+        window.secretKey = "1234"
       </script>
     <% end %>
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>

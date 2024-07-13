@@ -10,6 +10,9 @@ import {
   setResetCallback,
   setResumeCallback,
   showToast,
+  showCurrentUser,
+  setChatCallback,
+  showChat,
 } from "./tomer"
 
 // And connect to the path in "lib/tomer_web/endpoint.ex". We pass the
@@ -82,11 +85,18 @@ channel.on("state_changed", (newState) => {
 })
 
 channel.on("presence_state", (e) => {
-  console.log(e)
+  showCurrentUser(e)
 })
 
 channel.on("presence_diff", (e) => {
   showToast(e)
+})
+
+channel.on("chat", (e) => {
+  console.log({e})
+  if (params.get("chat") === "true") {
+    showChat(e.content)
+  }
 })
 
 function set(_e, hour, minute, second) {
@@ -108,10 +118,17 @@ function pause() {
   channel.push("pause")
 }
 
+function setChat(_e, content) {
+  channel.push("chat", {
+    content,
+  })
+}
+
 setSetCallback(set)
 setResetCallback(reset)
 setResumeCallback(resume)
 setPauseCallback(pause)
+setChatCallback(setChat)
 
 channel.join()
   .receive("ok", resp => {

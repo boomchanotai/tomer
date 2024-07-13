@@ -1,10 +1,21 @@
 <main class="w-full h-full">
+  <%= if !@isAdmin do %>
+    <div id="chat-div" class="absolute p-4 w-full h-1/2">
+      <p id="chat-content" class="text-6xl text-pretty text-center py-2 break-all flow-hidden"></p>
+    </div>
+  <% end %>
   <div class="absolute m-auto flex flex-col h-full w-full items-center justify-center gap-8">
     <span id="time-text" class="text-9xl font-bold italic" style="font-size: 8rem; line-height: 1;">
       0.000
     </span>
   </div>
   <%= if @isAdmin do %>
+    <div id="chat-box" class="w-full h-2/5 absolute flex flex-col gap-4 items-center">
+      <textarea id="chat-textarea" class="bg-zinc-800 text-white text-center w-full h-full p-2 m-2" title="chat-box"></textarea>
+      <div class="flex gap-2">
+        <button class="text-xl w-fit rounded-md bg-zinc-800 px-4 py-2" id="set-chat-btn">Set</button>
+      </div>
+    </div>
     <div id="toast-list" class="top-8 left-8 absolute flex flex-col gap-4">
 
     </div>

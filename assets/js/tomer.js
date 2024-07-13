@@ -180,6 +180,29 @@ export const setPauseCallback = (cb) => {
     });
 }
 
+export const setChatCallback = (cb) => {
+    console.log("Callback set")
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("Document ready")
+        const elem = document.getElementById("set-chat-btn")
+        if (!elem) {
+            return
+        }
+        elem.addEventListener("click", e => {
+            console.log("Button pushed")
+
+            const content = document.getElementById("chat-textarea").value
+
+            cb(e, content)
+        })
+    });
+}
+
+export const showChat = (content) => {
+    console.log("Callback set")
+    document.getElementById("chat-content").innerText = content;
+}
+
 export const showToast = (e) => {
     Object.keys(e.joins).forEach(join => {
         showJoin(join, e[join])
@@ -190,10 +213,15 @@ export const showToast = (e) => {
 }
 
 function showJoin(id, metadata) {
+    const toastList = document.getElementById("toast-list")
+    if (!toastList) {
+        return
+    }
+
     const div = document.createElement("div")
-    div.classList = ["bg-green-800", "p-4", "rounded-lg", "border-green-900", "border-2", "opacity-0", "transition"].join(" ")
+    div.classList = ["opacity-40", "bg-green-800", "p-4", "rounded-lg", "border-green-900", "border-2", "opacity-0", "transition"].join(" ")
     div.innerText = `"${id}" has left the room`
-    document.getElementById("toast-list").prepend(div)
+    toastList.prepend(div)
     setTimeout(() => {
         div.classList.remove("opacity-0")
     }, 150)
@@ -212,10 +240,43 @@ function showJoin(id, metadata) {
 }
 
 function showLeave(id, metadata) {
+    const toastList = document.getElementById("toast-list")
+    if (!toastList) {
+        return
+    }
+
     const div = document.createElement("div")
-    div.classList = ["bg-red-800", "p-4", "rounded-lg", "border-red-900", "border-2", "opacity-0", "transition"].join(" ")
+    div.classList = ["opacity-40", "bg-red-800", "p-4", "rounded-lg", "border-red-900", "border-2", "opacity-0", "transition"].join(" ")
     div.innerText = `"${id}" has left the room`
-    document.getElementById("toast-list").prepend(div)
+    toastList.prepend(div)
+    setTimeout(() => {
+        div.classList.remove("opacity-0")
+    }, 150)
+    const remove = () => {
+        div.classList.add("opacity-0")
+        setTimeout(() => {
+            div.remove()
+        }, 500)
+    }
+    div.onclick = () => {
+        remove()
+    }
+    setTimeout(() => {
+        remove()
+    }, 3000)
+}
+
+export function showCurrentUser(obj) {
+    const toastList = document.getElementById("toast-list")
+    if (!toastList) {
+        return
+    }
+
+    const div = document.createElement("div")
+    div.classList = ["opacity-40", "bg-red-800", "p-4", "rounded-lg", "border-red-900", "border-2", "opacity-0", "transition"].join(" ")
+    const keys = Object.keys(obj)
+    div.innerText = `Current user: ${keys}`
+    toastList.prepend(div)
     setTimeout(() => {
         div.classList.remove("opacity-0")
     }, 150)
