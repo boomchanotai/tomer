@@ -8,3 +8,20 @@
 html {
     font-family: "Space Mono", monospace;
 }
+
+@keyframes flashing {
+    0% {
+        opacity: 100%;
+    }
+
+    50% {
+        opacity: 20%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
+.flashing {
+    animation: 3s linear infinite flashing;
+}

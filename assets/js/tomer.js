@@ -6,12 +6,18 @@ export const updateTime = () => {
         return;
     }
     const now = Date.now()
+    const timeText = document.getElementById("time-text")
     if (finalTime <= now) {
-        document.getElementById("time-text").innerHTML = '0.000'
+        timeText.innerHTML = '0.000'
+        timeText.classList.remove("flashing")
         return
     }
 
     const totalMs = finalTime - now
+
+    if (totalMs < 10_000 && !timeText.classList.contains("flashing")) {
+        timeText.classList.add("flashing")
+    }
 
     const newTime = epochToString(totalMs)
     
@@ -91,6 +97,7 @@ function startCountdown(newFinalTime) {
 function showEpoch(remainingEpoch) {
     stop = true
     const newTime = epochToString(remainingEpoch)
+    document.getElementById("time-text").classList.remove("flashing")
     tryShow("resume-container")
     tryShow("reset-container")
     tryHide("set-container")
@@ -100,6 +107,7 @@ function showEpoch(remainingEpoch) {
 
 function standby() {
     stop = true
+    document.getElementById("time-text")
     tryHide("resume-container")
     tryHide("reset-container")
     tryShow("set-container")
