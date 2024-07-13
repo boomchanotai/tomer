@@ -7,7 +7,7 @@ export const updateTime = () => {
     }
     const now = Date.now()
     if (finalTime <= now) {
-        document.getElementById("time-text").innerHTML = '0'
+        document.getElementById("time-text").innerHTML = '0.000'
         return
     }
 
@@ -67,44 +67,44 @@ export function setState(newState) {
 function tryHide(elementId) {
     const elem = document.getElementById(elementId)
     if (elem) {
-        elem.hidden = true
+        elem.classList.add("hidden")
     }
 }
 
 function tryShow(elementId) {
     const elem = document.getElementById(elementId)
     if (elem) {
-        elem.hidden = false
+        elem.classList.remove("hidden")
     }
 }
 
 function startCountdown(newFinalTime) {
     finalTime = newFinalTime
     stop = false
-    tryHide("resume-btn")
-    tryHide("reset-btn")
-    tryHide("set-btn")
-    tryShow("pause-btn")
+    tryHide("resume-container")
+    tryHide("reset-container")
+    tryHide("set-container")
+    tryShow("pause-container")
     updateTime()
 }
 
 function showEpoch(remainingEpoch) {
     stop = true
     const newTime = epochToString(remainingEpoch)
-    tryShow("resume-btn")
-    tryShow("reset-btn")
-    tryHide("set-btn")
-    tryHide("pause-btn")
+    tryShow("resume-container")
+    tryShow("reset-container")
+    tryHide("set-container")
+    tryHide("pause-container")
     setTimeTextString(newTime)
 }
 
 function standby() {
     stop = true
-    tryHide("resume-btn")
-    tryHide("reset-btn")
-    tryShow("set-btn")
-    tryHide("pause-btn")
-    setTimeTextString("0")
+    tryHide("resume-container")
+    tryHide("reset-container")
+    tryShow("set-container")
+    tryHide("pause-container")
+    setTimeTextString("0.000")
 }
 
 export const setSetCallback = (cb) => {

@@ -71,7 +71,7 @@ channel.on("state_changed", (newState) => {
 
 function set() {
   channel.push("set", {
-    remainingEpoch: 25000
+    remainingEpoch: 1000
   })
 }
 

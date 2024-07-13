@@ -1,13 +1,26 @@
 <main class="w-full h-full">
   <div class="flex flex-col h-full items-center justify-center gap-8">
-    <span id="time-text" class="text-9xl" style="font-size: 8rem; line-height: 1;">
+    <span id="time-text" class="text-9xl font-bold italic" style="font-size: 8rem; line-height: 1;">
       0
     </span>
     <%= if @isAdmin do %>
-      <button id="set-btn">Set Time</button>
-      <button id="reset-btn">Reset</button>
-      <button id="resume-btn">Resume</button>
-      <button id="pause-btn">Pause</button>
+      <div id="set-container" class="flex flex-col gap-4">
+        <div class="flex gap-2 items-center">
+          <input name="hour" class="bg-zinc-800 text-center p-2 w-12" placeholder="00">:
+          <input name="minute" class="bg-zinc-800 text-center p-2 w-12" placeholder="00">:
+          <input name="second" class="bg-zinc-800 text-center p-2 w-12" placeholder="00">
+        </div>
+        <button class="text-xl" id="set-btn">Set Time</button>
+      </div>
+      <div id="reset-container">
+        <button class="text-xl" id="reset-btn">Reset</button>
+      </div>
+      <div id="resume-container">
+        <button class="text-xl" id="resume-btn">Resume</button>
+      </div>
+      <div id="pause-container">
+        <button class="text-xl" id="pause-btn">Pause</button>
+      </div>
     <% end %>
   </div>
 </main>
