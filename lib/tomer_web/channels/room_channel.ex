@@ -11,6 +11,7 @@ defmodule TomerWeb.RoomChannel do
   @impl true
   def handle_in("get", _payload, socket) do
     data = Room.get()
+    IO.inspect data
     push(socket, "get", data)
     {:noreply, socket}
   end

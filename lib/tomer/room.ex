@@ -37,7 +37,7 @@ defmodule Tomer.Room do
 
   @impl true
   def handle_call({:get}, _from, state) do
-    {:reply, state, state}
+    {:reply, state |> Map.pop(:timerRef) |> elem(1), state}
   end
 
   @impl true
