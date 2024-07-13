@@ -69,9 +69,10 @@ channel.on("state_changed", (newState) => {
   setState(newState)
 })
 
-function set() {
+function set(_e, hour, minute, second) {
+  const epoch = ((((60 * hour) + minute) * 60) + second) * 1000;
   channel.push("set", {
-    remainingEpoch: 1000
+    remainingEpoch: epoch,
   })
 }
 

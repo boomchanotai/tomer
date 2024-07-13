@@ -6,9 +6,9 @@
     <%= if @isAdmin do %>
       <div id="set-container" class="flex flex-col gap-4">
         <div class="flex gap-2 items-center">
-          <input name="hour" class="bg-zinc-800 text-center p-2 w-12" placeholder="00">:
-          <input name="minute" class="bg-zinc-800 text-center p-2 w-12" placeholder="00">:
-          <input name="second" class="bg-zinc-800 text-center p-2 w-12" placeholder="00">
+          <input name="hour" id="hour-input" class="bg-zinc-800 text-center p-2 w-12" placeholder="00">:
+          <input name="minute" id="minute-input" class="bg-zinc-800 text-center p-2 w-12" placeholder="00">:
+          <input name="second" id="second-input" class="bg-zinc-800 text-center p-2 w-12" placeholder="00">
         </div>
         <button class="text-xl" id="set-btn">Set Time</button>
       </div>

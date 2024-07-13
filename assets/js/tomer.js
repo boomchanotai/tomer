@@ -117,7 +117,12 @@ export const setSetCallback = (cb) => {
         }
         elem.addEventListener("click", e => {
             console.log("Button pushed")
-            cb(e)
+
+            const hour = parseInt(document.getElementById("hour-input").value)
+            const minute = parseInt(document.getElementById("minute-input").value)
+            const second = parseInt(document.getElementById("second-input").value)
+
+            cb(e, hour, minute, second)
         })
     });
 }
