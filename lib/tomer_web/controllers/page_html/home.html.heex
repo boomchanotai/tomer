@@ -1,26 +1,28 @@
 <main class="w-full h-full">
-  <div class="flex flex-col h-full items-center justify-center gap-8">
+  <div class="absolute m-auto flex flex-col h-full w-full items-center justify-center gap-8">
     <span id="time-text" class="text-9xl font-bold italic" style="font-size: 8rem; line-height: 1;">
-      0
+      0.000
     </span>
-    <%= if @isAdmin do %>
-      <div id="set-container" class="flex flex-col gap-4">
+  </div>
+  <%= if @isAdmin do %>
+    <div class="absolute w-full h-1/2 bottom-0 flex flex-col justify-center items-center gap-4">
+      <div id="set-container" class="flex flex-col w-max gap-4 items-center">
         <div class="flex gap-2 items-center">
           <input name="hour" id="hour-input" class="bg-zinc-800 text-center p-2 w-12" placeholder="00">:
           <input name="minute" id="minute-input" class="bg-zinc-800 text-center p-2 w-12" placeholder="00">:
           <input name="second" id="second-input" class="bg-zinc-800 text-center p-2 w-12" placeholder="00">
         </div>
-        <button class="text-xl" id="set-btn">Set Time</button>
+        <button class="text-xl w-fit rounded-md bg-zinc-800 px-4 py-2" id="set-btn">Set Time</button>
       </div>
-      <div id="reset-container">
-        <button class="text-xl" id="reset-btn">Reset</button>
+      <div id="reset-container" class="flex flex-col w-max gap-4 items-center">
+        <button class="text-xl w-fit rounded-md bg-zinc-800 px-4 py-2" id="reset-btn">Reset</button>
       </div>
-      <div id="resume-container">
-        <button class="text-xl" id="resume-btn">Resume</button>
+      <div id="resume-container" class="flex flex-col w-max gap-4 items-center">
+        <button class="text-xl w-fit rounded-md bg-zinc-800 px-4 py-2" id="resume-btn">Resume</button>
       </div>
-      <div id="pause-container">
-        <button class="text-xl" id="pause-btn">Pause</button>
+      <div id="pause-container" class="flex flex-col w-max gap-4 items-center">
+        <button class="text-xl w-fit rounded-md bg-zinc-800 px-4 py-2" id="pause-btn">Pause</button>
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </main>
