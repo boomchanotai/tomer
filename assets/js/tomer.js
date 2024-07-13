@@ -187,26 +187,44 @@ export const showToast = (e) => {
 
 function showJoin(id, metadata) {
     const div = document.createElement("div")
-    div.classList = ["bg-red-800", "p-4", "rounded-lg", "border-red-900", "border-2"].join(" ")
-    div.innerText = `"${id}" has join the room`
+    div.classList = ["bg-green-800", "p-4", "rounded-lg", "border-green-900", "border-2", "opacity-0", "transition"].join(" ")
+    div.innerText = `"${id}" has left the room`
     document.getElementById("toast-list").prepend(div)
+    setTimeout(() => {
+        div.classList.remove("opacity-0")
+    }, 150)
+    const remove = () => {
+        div.classList.add("opacity-0")
+        setTimeout(() => {
+            div.remove()
+        }, 500)
+    }
     div.onclick = () => {
-        div.remove()
+        remove()
     }
     setTimeout(() => {
-        div.remove()
+        remove()
     }, 3000)
 }
 
 function showLeave(id, metadata) {
     const div = document.createElement("div")
-    div.classList = ["bg-green-800", "p-4", "rounded-lg", "border-green-900", "border-2"].join(" ")
+    div.classList = ["bg-red-800", "p-4", "rounded-lg", "border-red-900", "border-2", "opacity-0", "transition"].join(" ")
     div.innerText = `"${id}" has left the room`
     document.getElementById("toast-list").prepend(div)
+    setTimeout(() => {
+        div.classList.remove("opacity-0")
+    }, 150)
+    const remove = () => {
+        div.classList.add("opacity-0")
+        setTimeout(() => {
+            div.remove()
+        }, 500)
+    }
     div.onclick = () => {
-        div.remove()
+        remove()
     }
     setTimeout(() => {
-        div.remove()
+        remove()
     }, 3000)
 }
