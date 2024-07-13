@@ -47,6 +47,18 @@ defmodule TomerWeb.RoomChannel do
     {:noreply, socket}
   end
 
+  @impl true
+  def handle_in(x, payload, socket) do
+    IO.puts "Unexpected state"
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_info({:timeout, newState}, socket) do
+    broadcast(socket, "state_changed", newState)
+    {:noreply, socket}
+  end
+
   # Add authorization logic here as required.
   defp authorized?(_payload) do
     true

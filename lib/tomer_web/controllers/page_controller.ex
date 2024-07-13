@@ -8,6 +8,7 @@ defmodule TomerWeb.PageController do
   end
 
   def admin(conn, _params) do
-    render(conn, :home, layout: false, isAdmin: true)
+    state = Tomer.Room.get()
+    render(conn, :home, layout: false, isAdmin: true, state: state)
   end
 end

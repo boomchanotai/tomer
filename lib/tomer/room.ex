@@ -1,4 +1,5 @@
 defmodule Tomer.Room do
+  alias Phoenix.PubSub
   use GenServer
 
   @impl true
@@ -57,10 +58,12 @@ defmodule Tomer.Room do
   end
 
   @impl true
-  def handle_call({:resume}, _from, %{ remainingEpoch: remainingEpoch, type: :pause }) do
+  def handle_call({:resume}, _from, %{ remainingEpoch: remainingEpoch }) do
+    Process.send_after(self(), {:timeout}, remainingEpoch)
+    finalTime = System.os_time(:millisecond) + remainingEpoch
     newState = %{
       type: :running,
-      finalTime: System.os_time(:millisecond) + remainingEpoch,
+      finalTime: finalTime,
     }
     {:reply, newState, newState}
   end
@@ -74,4 +77,11 @@ defmodule Tomer.Room do
     {:reply, newState, newState}
   end
 
+  def handle_info(x, _state) do
+    newState = %{
+      type: :standby,
+    }
+    PubSub.broadcast(Tomer.PubSub, "room:user", {:timeout, newState})
+    {:noreply, newState}
+  end
 end

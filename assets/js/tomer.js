@@ -65,7 +65,18 @@ export const setPushCallback = (cb) => {
     console.log("Callback set")
     document.addEventListener("DOMContentLoaded", function() {
         console.log("Document ready")
-        document.getElementById("btn").addEventListener("click", e => {
+        document.getElementById("addtime-btn").addEventListener("click", e => {
+            console.log("Button pushed")
+            cb(e)
+        })
+    });
+}
+
+export const setPushCallback2 = (cb) => {
+    console.log("Callback set")
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("Document ready")
+        document.getElementById("start-btn").addEventListener("click", e => {
             console.log("Button pushed")
             cb(e)
         })

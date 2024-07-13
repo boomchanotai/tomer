@@ -3,7 +3,7 @@
 
 // Bring in Phoenix channels client library:
 import {Socket} from "phoenix"
-import { startCountdown, showEpoch, setPushCallback } from "./tomer"
+import { setPushCallback2, showEpoch, setPushCallback, startCountdown } from "./tomer"
 
 // And connect to the path in "lib/tomer_web/endpoint.ex". We pass the
 // token for authentication. Read below how it should be used.
@@ -64,8 +64,11 @@ channel.on("get", (e) => {
 })
 
 channel.on("state_changed", (newState) => {
+  console.log("State change!")
   if (newState.type == "pause") {
     showEpoch(newState.remainingEpoch)
+  } else if (newState.type == "running") {
+    startCountdown(newState.finalTime)
   }
 })
 
@@ -74,7 +77,13 @@ function push() {
     remainingEpoch: 2500
   })
 }
+
+function push2() {
+  channel.push("resume")
+}
+
 setPushCallback(push)
+setPushCallback2(push2)
 
 channel.join()
   .receive("ok", resp => {
