@@ -68,6 +68,7 @@ const params = new URL(document.location.toString()).searchParams
 const id = params.get("id")
 let channel = socket.channel("room:user", {
   id,
+  secretKey: window.secretKey,
 })
 
 channel.on("get", (e) => {

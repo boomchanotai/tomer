@@ -118,9 +118,9 @@ export const setSetCallback = (cb) => {
         elem.addEventListener("click", e => {
             console.log("Button pushed")
 
-            const hour = parseInt(document.getElementById("hour-input").value)
-            const minute = parseInt(document.getElementById("minute-input").value)
-            const second = parseInt(document.getElementById("second-input").value)
+            const hour = parseInt(document.getElementById("hour-input").value) || 0
+            const minute = parseInt(document.getElementById("minute-input").value) || 0
+            const second = parseInt(document.getElementById("second-input").value) || 0
 
             cb(e, hour, minute, second)
         })

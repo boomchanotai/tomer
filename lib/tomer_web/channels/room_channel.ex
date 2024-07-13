@@ -5,10 +5,11 @@ defmodule TomerWeb.RoomChannel do
 
   @impl true
   def join("room:user", payload, socket) do
-
     send(self(), :after_join)
     case payload do
-      %{ "id" => id } -> {:ok, assign(socket, :user_id, id)}
+      %{ "id" => id } ->
+        socket = socket |> assign(:user_id, id) |> assign(:admin, authorized?(Map.get(payload, "secretKey", "")))
+        {:ok, socket}
       %{} -> {:ok, socket}
     end
   end
@@ -17,7 +18,6 @@ defmodule TomerWeb.RoomChannel do
   @impl true
   def handle_in("get", _payload, socket) do
     data = Room.get()
-    IO.inspect data
     push(socket, "get", data)
     {:noreply, socket}
   end
@@ -25,33 +25,49 @@ defmodule TomerWeb.RoomChannel do
   # Standby -> pause
   @impl true
   def handle_in("set", %{ "remainingEpoch" => remainingEpoch }, socket) do
-    state = Room.set(remainingEpoch)
-    broadcast(socket, "state_changed", state)
-    {:noreply, socket}
+    if !socket.assigns.admin do
+      {:noreply, socket}
+    else
+      state = Room.set(remainingEpoch)
+      broadcast(socket, "state_changed", state)
+      {:noreply, socket}
+    end
   end
 
   # Pause -> Standby
   @impl true
   def handle_in("reset", _payload, socket) do
-    state = Room.reset()
-    broadcast(socket, "state_changed", state)
-    {:noreply, socket}
+    if !socket.assigns.admin do
+      {:noreply, socket}
+    else
+      state = Room.reset()
+      broadcast(socket, "state_changed", state)
+      {:noreply, socket}
+    end
   end
 
   #  Pause -> Running
   @impl true
   def handle_in("resume", _payload, socket) do
-    state = Room.resume()
-    broadcast(socket, "state_changed", state)
-    {:noreply, socket}
+    if !socket.assigns.admin do
+      {:noreply, socket}
+    else
+      state = Room.resume()
+      broadcast(socket, "state_changed", state)
+      {:noreply, socket}
+    end
   end
 
   # Running -> Puase
   @impl true
   def handle_in("pause", _payload, socket) do
-    state = Room.pause()
-    broadcast(socket, "state_changed", state)
-    {:noreply, socket}
+    if !socket.assigns.admin do
+      {:noreply, socket}
+    else
+      state = Room.pause()
+      broadcast(socket, "state_changed", state)
+      {:noreply, socket}
+    end
   end
 
   @impl true
@@ -76,7 +92,7 @@ defmodule TomerWeb.RoomChannel do
   end
 
   # Add authorization logic here as required.
-  defp authorized?(_payload) do
-    true
+  defp authorized?(secretKey) do
+    secretKey == Application.fetch_env!(:tomer, :secret_key)
   end
 end

@@ -8,6 +8,11 @@
       <%= assigns[:page_title] || "Tomer" %>
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    <%= if @isAdmin do %>
+      <script>
+        window.secretKey = prompt("Secret key")
+      </script>
+    <% end %>
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
