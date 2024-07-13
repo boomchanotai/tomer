@@ -7,6 +7,9 @@ import Config
 # before starting your production server.
 config :tomer, TomerWeb.Endpoint, cache_static_manifest: "priv/static/cache_manifest.json"
 
+
+config :tomer, TomerWeb.Endpoint, check_origin: false
+
 # Do not print debug messages in production
 config :logger, level: :info
 
