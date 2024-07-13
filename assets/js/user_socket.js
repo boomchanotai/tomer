@@ -3,7 +3,7 @@
 
 // Bring in Phoenix channels client library:
 import {Socket} from "phoenix"
-import { setPushCallback2, showEpoch, setPushCallback, startCountdown } from "./tomer"
+import { setState, setSetCallback, setPauseCallback, setResetCallback, setResumeCallback } from "./tomer"
 
 // And connect to the path in "lib/tomer_web/endpoint.ex". We pass the
 // token for authentication. Read below how it should be used.
@@ -61,33 +61,41 @@ let channel = socket.channel("room:user", {})
 
 channel.on("get", (e) => {
   console.log({e})
+  setState(e)
 })
 
 channel.on("state_changed", (newState) => {
-  console.log("State change!")
-  if (newState.type == "pause") {
-    showEpoch(newState.remainingEpoch)
-  } else if (newState.type == "running") {
-    startCountdown(newState.finalTime)
-  }
+  console.log("State change!", newState)
+  setState(newState)
 })
 
-function push() {
+function set() {
   channel.push("set", {
-    remainingEpoch: 2500
+    remainingEpoch: 25000
   })
 }
 
-function push2() {
-  channel.push("resume")
+function reset() {
+  channel.push("reset", {})
 }
 
-setPushCallback(push)
-setPushCallback2(push2)
+function resume() {
+  channel.push("resume", {})
+}
+
+function pause() {
+  channel.push("pause")
+}
+
+setSetCallback(set)
+setResetCallback(reset)
+setResumeCallback(resume)
+setPauseCallback(pause)
 
 channel.join()
   .receive("ok", resp => {
     console.log("Joined successfully", resp)
+    channel.push("get", {})
   })
   .receive("error", resp => { console.log("Unable to join", resp) })
 

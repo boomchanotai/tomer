@@ -59,17 +59,23 @@ defmodule Tomer.Room do
 
   @impl true
   def handle_call({:resume}, _from, %{ remainingEpoch: remainingEpoch }) do
-    Process.send_after(self(), {:timeout}, remainingEpoch)
+    timerRef = Process.send_after(self(), {:timeout}, remainingEpoch)
     finalTime = System.os_time(:millisecond) + remainingEpoch
     newState = %{
       type: :running,
       finalTime: finalTime,
+      timerRef: timerRef,
     }
-    {:reply, newState, newState}
+    returnVal = %{
+      type: :running,
+      finalTime: finalTime,
+    }
+    {:reply, returnVal, newState}
   end
 
   @impl true
-  def handle_call({:pause}, _from, %{ type: :running, finalTime: finalTime }) do
+  def handle_call({:pause}, _from, %{ type: :running, finalTime: finalTime, timerRef: timerRef }) do
+    Process.cancel_timer(timerRef)
     newState = %{
       type: :pause,
       remainingEpoch: finalTime - System.os_time(:millisecond),
