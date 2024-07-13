@@ -10,7 +10,7 @@ defmodule TomerWeb.PageController do
   def home(conn, _params) do
     # The home page is often custom made,
     # so skip the default app layout.
-    id = :rand.uniform(30)
+    id = gen_random_id()
     redirect(conn, to: ~p"/?id=#{id}")
   end
 
@@ -22,7 +22,55 @@ defmodule TomerWeb.PageController do
   def admin(conn, _params) do
     # The home page is often custom made,
     # so skip the default app layout.
-    id = :rand.uniform(30)
+    id = gen_random_id()
     redirect(conn, to: ~p"/admin?id=#{id}")
+  end
+  
+  defp gen_random_id do
+    adjs = [
+      "fat",
+      "ancient",
+      "lewd",
+      "scarce",
+      "hollow",
+      "utopian",
+      "tiny",
+      "tangible",
+      "acceptable",
+      "distinct",
+      "spectacular",
+      "ablaze",
+      "average",
+      "meaty",
+      "uttermost",
+      "hideous",
+      "belligerent",
+      "rainy",
+      "wakeful",
+      "greedy"
+    ]
+    nouns = [
+      "scent",
+      "butter",
+      "sheep",
+      "crayon",
+      "jewel",
+      "elbow",
+      "bag",
+      "yard",
+      "whip",
+      "yam",
+      "vegetable",
+      "vessel",
+      "force",
+      "part",
+      "fifth",
+      "team",
+      "toes",
+      "riddle",
+      "week",
+      "heat"
+    ]
+    "#{Enum.random(adjs)}-#{Enum.random(nouns)}"
   end
 end

@@ -172,10 +172,6 @@ export const setPauseCallback = (cb) => {
     });
 }
 
-// <div class="bg-red-400 p-4 rounded-lg border-red-500 border-2 text-white">
-// ship hai
-// </div>
-
 export const showToast = (e) => {
     Object.keys(e.joins).forEach(join => {
         showJoin(join, e[join])
