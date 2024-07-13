@@ -3,7 +3,14 @@
 
 // Bring in Phoenix channels client library:
 import {Socket} from "phoenix"
-import { setState, setSetCallback, setPauseCallback, setResetCallback, setResumeCallback } from "./tomer"
+import {
+  setState,
+  setSetCallback,
+  setPauseCallback,
+  setResetCallback,
+  setResumeCallback,
+  showToast,
+} from "./tomer"
 
 // And connect to the path in "lib/tomer_web/endpoint.ex". We pass the
 // token for authentication. Read below how it should be used.
@@ -57,7 +64,11 @@ socket.connect()
 // Now that you are connected, you can join channels with a topic.
 // Let's assume you have a channel with a topic named `room` and the
 // subtopic is its id - in this case 42:
-let channel = socket.channel("room:user", {})
+const params = new URL(document.location.toString()).searchParams
+const id = params.get("id")
+let channel = socket.channel("room:user", {
+  id,
+})
 
 channel.on("get", (e) => {
   console.log({e})
@@ -67,6 +78,14 @@ channel.on("get", (e) => {
 channel.on("state_changed", (newState) => {
   console.log("State change!", newState)
   setState(newState)
+})
+
+channel.on("presence_state", (e) => {
+  console.log(e)
+})
+
+channel.on("presence_diff", (e) => {
+  showToast(e)
 })
 
 function set(_e, hour, minute, second) {

@@ -171,3 +171,42 @@ export const setPauseCallback = (cb) => {
         })
     });
 }
+
+// <div class="bg-red-400 p-4 rounded-lg border-red-500 border-2 text-white">
+// ship hai
+// </div>
+
+export const showToast = (e) => {
+    Object.keys(e.joins).forEach(join => {
+        showJoin(join, e[join])
+    })
+    Object.keys(e.leaves).forEach(left => {
+        showLeave(left, e[left])
+    })
+}
+
+function showJoin(id, metadata) {
+    const div = document.createElement("div")
+    div.classList = ["bg-red-800", "p-4", "rounded-lg", "border-red-900", "border-2"].join(" ")
+    div.innerText = `"${id}" has join the room`
+    document.getElementById("toast-list").prepend(div)
+    div.onclick = () => {
+        div.remove()
+    }
+    setTimeout(() => {
+        div.remove()
+    }, 3000)
+}
+
+function showLeave(id, metadata) {
+    const div = document.createElement("div")
+    div.classList = ["bg-green-800", "p-4", "rounded-lg", "border-green-900", "border-2"].join(" ")
+    div.innerText = `"${id}" has left the room`
+    document.getElementById("toast-list").prepend(div)
+    div.onclick = () => {
+        div.remove()
+    }
+    setTimeout(() => {
+        div.remove()
+    }, 3000)
+}

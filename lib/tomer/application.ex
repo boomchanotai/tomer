@@ -15,6 +15,7 @@ defmodule Tomer.Application do
       # {Tomer.Worker, arg},
       # Start to serve requests, typically the last entry
       TomerWeb.Endpoint,
+      TomerWeb.Presence,
       Tomer.Room
     ]
 

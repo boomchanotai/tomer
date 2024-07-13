@@ -1,10 +1,16 @@
 defmodule TomerWeb.RoomChannel do
   alias Tomer.Room
+  alias TomerWeb.Presence
   use TomerWeb, :channel
 
   @impl true
   def join("room:user", payload, socket) do
-    {:ok, socket}
+
+    send(self(), :after_join)
+    case payload do
+      %{ "id" => id } -> {:ok, assign(socket, :user_id, id)}
+      %{} -> {:ok, socket}
+    end
   end
 
   # Get current state
@@ -57,6 +63,15 @@ defmodule TomerWeb.RoomChannel do
   @impl true
   def handle_info({:timeout, newState}, socket) do
     broadcast(socket, "state_changed", newState)
+    {:noreply, socket}
+  end
+
+  def handle_info(:after_join, socket) do
+    {:ok, _} = Presence.track(socket, socket.assigns.user_id, %{
+      online_at: inspect(System.system_time(:second))
+    })
+
+    push(socket, "presence_state", Presence.list(socket))
     {:noreply, socket}
   end
 
