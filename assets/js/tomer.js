@@ -135,6 +135,26 @@ export const setSetCallback = (cb) => {
     });
 }
 
+export const setStartCallback = (cb) => {
+    console.log("Callback set")
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("Document ready")
+        const elem = document.getElementById("start-btn")
+        if (!elem) {
+            return
+        }
+        elem.addEventListener("click", e => {
+            console.log("Button pushed")
+
+            const hour = parseInt(document.getElementById("hour-input").value) || 0
+            const minute = parseInt(document.getElementById("minute-input").value) || 0
+            const second = parseInt(document.getElementById("second-input").value) || 0
+
+            cb(e, hour, minute, second)
+        })
+    });
+}
+
 export const setResumeCallback = (cb) => {
     console.log("Callback set")
     document.addEventListener("DOMContentLoaded", function() {

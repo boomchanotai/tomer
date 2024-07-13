@@ -6,6 +6,7 @@ import {Socket} from "phoenix"
 import {
   setState,
   setSetCallback,
+  setStartCallback,
   setPauseCallback,
   setResetCallback,
   setResumeCallback,
@@ -106,6 +107,13 @@ function set(_e, hour, minute, second) {
   })
 }
 
+function start(_e, hour, minute, second) {
+  const epoch = ((((60 * hour) + minute) * 60) + second) * 1000;
+  channel.push("start", {
+    remainingEpoch: epoch,
+  })
+}
+
 function reset() {
   channel.push("reset", {})
 }
@@ -125,6 +133,7 @@ function setChat(_e, content) {
 }
 
 setSetCallback(set)
+setStartCallback(start)
 setResetCallback(reset)
 setResumeCallback(resume)
 setPauseCallback(pause)

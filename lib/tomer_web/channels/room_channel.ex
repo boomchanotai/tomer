@@ -34,6 +34,18 @@ defmodule TomerWeb.RoomChannel do
     end
   end
 
+  # Standby -> pause
+  @impl true
+  def handle_in("start", %{ "remainingEpoch" => remainingEpoch }, socket) do
+    if !socket.assigns.admin do
+      {:noreply, socket}
+    else
+      state = Room.start(remainingEpoch)
+      broadcast(socket, "state_changed", state)
+      {:noreply, socket}
+    end
+  end
+
   # Pause -> Standby
   @impl true
   def handle_in("reset", _payload, socket) do

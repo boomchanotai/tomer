@@ -23,6 +23,10 @@ defmodule Tomer.Room do
     GenServer.call(__MODULE__, {:set, remainingEpoch})
   end
 
+  def start(remainingEpoch) do
+    GenServer.call(__MODULE__, {:start, remainingEpoch})
+  end
+
   def reset() do
     GenServer.call(__MODULE__, {:reset})
   end
@@ -47,6 +51,22 @@ defmodule Tomer.Room do
       remainingEpoch: remainingEpoch,
     }
     {:reply, newState, newState}
+  end
+
+  @impl true
+  def handle_call({:start, remainingEpoch}, _from, %{ type: :standby }) do
+    timerRef = Process.send_after(self(), {:timeout}, remainingEpoch)
+    finalTime = System.os_time(:millisecond) + remainingEpoch
+    newState = %{
+      type: :running,
+      finalTime: finalTime,
+      timerRef: timerRef,
+    }
+    returnVal = %{
+      type: :running,
+      finalTime: finalTime,
+    }
+    {:reply, returnVal, newState}
   end
 
   @impl true
