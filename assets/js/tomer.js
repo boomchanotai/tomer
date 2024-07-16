@@ -3,7 +3,7 @@ var finalTime
 
 export const updateTime = () => {
     if (stop) {
-        return;
+        return
     }
     const now = Date.now()
     const timeText = document.getElementById("time-text")
@@ -132,7 +132,7 @@ export const setSetCallback = (cb) => {
 
             cb(e, hour, minute, second)
         })
-    });
+    })
 }
 
 export const setStartCallback = (cb) => {
@@ -152,13 +152,11 @@ export const setStartCallback = (cb) => {
 
             cb(e, hour, minute, second)
         })
-    });
+    })
 }
 
 export const setResumeCallback = (cb) => {
-    console.log("Callback set")
     document.addEventListener("DOMContentLoaded", function() {
-        console.log("Document ready")
         const elem = document.getElementById("resume-btn")
         if (!elem) {
             return
@@ -167,13 +165,11 @@ export const setResumeCallback = (cb) => {
             console.log("Button pushed")
             cb(e)
         })
-    });
+    })
 }
 
 export const setResetCallback = (cb) => {
-    console.log("Callback set")
     document.addEventListener("DOMContentLoaded", function() {
-        console.log("Document ready")
         const elem = document.getElementById("reset-btn")
         if (!elem) {
             return
@@ -182,28 +178,23 @@ export const setResetCallback = (cb) => {
             console.log("Button pushed")
             cb(e)
         })
-    });
+    })
 }
 
 export const setPauseCallback = (cb) => {
-    console.log("Callback set")
     document.addEventListener("DOMContentLoaded", function() {
-        console.log("Document ready")
         const elem = document.getElementById("pause-btn")
         if (!elem) {
             return
         }
         elem.addEventListener("click", e => {
-            console.log("Button pushed")
             cb(e)
         })
-    });
+    })
 }
 
 export const setChatCallback = (cb) => {
-    console.log("Callback set")
     document.addEventListener("DOMContentLoaded", function() {
-        console.log("Document ready")
         const elem = document.getElementById("set-chat-btn")
         if (!elem) {
             return
@@ -215,11 +206,10 @@ export const setChatCallback = (cb) => {
 
             cb(e, content)
         })
-    });
+    })
 }
 
 export const showChat = (content) => {
-    console.log("Callback set")
     document.getElementById("chat-content").innerText = content;
 }
 
