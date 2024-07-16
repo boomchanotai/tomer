@@ -70,20 +70,6 @@ export function setState(newState) {
   }
 }
 
-function tryHide(elementId) {
-    const elem = document.getElementById(elementId)
-    if (elem) {
-        elem.classList.add("hidden")
-    }
-}
-
-function tryShow(elementId) {
-    const elem = document.getElementById(elementId)
-    if (elem) {
-        elem.classList.remove("hidden")
-    }
-}
-
 function startCountdown(newFinalTime) {
     finalTime = newFinalTime
     stop = false
@@ -222,6 +208,20 @@ export const showToast = (e) => {
     })
 }
 
+function tryHide(elementId) {
+    const elem = document.getElementById(elementId)
+    if (elem) {
+        elem.classList.add("hidden")
+    }
+}
+
+function tryShow(elementId) {
+    const elem = document.getElementById(elementId)
+    if (elem) {
+        elem.classList.remove("hidden")
+    }
+}
+
 function showJoin(id, metadata) {
     const toastList = document.getElementById("toast-list")
     if (!toastList) {
@@ -230,7 +230,7 @@ function showJoin(id, metadata) {
 
     const div = document.createElement("div")
     div.classList = ["opacity-40", "bg-green-800", "p-4", "rounded-lg", "border-green-900", "border-2", "opacity-0", "transition"].join(" ")
-    div.innerText = `"${id}" has left the room`
+    div.innerText = `"${id}" has joined the room`
     toastList.prepend(div)
     setTimeout(() => {
         div.classList.remove("opacity-0")

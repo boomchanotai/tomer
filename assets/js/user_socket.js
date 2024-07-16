@@ -76,7 +76,6 @@ let channel = socket.channel("room:user", {
 })
 
 channel.on("get", (e) => {
-  console.log({e})
   setState(e)
 })
 
@@ -94,7 +93,6 @@ channel.on("presence_diff", (e) => {
 })
 
 channel.on("chat", (e) => {
-  console.log({e})
   if (params.get("chat") === "true") {
     showChat(e.content)
   }

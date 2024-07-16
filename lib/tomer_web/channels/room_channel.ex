@@ -5,9 +5,9 @@ defmodule TomerWeb.RoomChannel do
 
   @impl true
   def join("room:user", payload, socket) do
-    send(self(), :after_join)
     case payload do
-      %{ "id" => id } ->
+      %{ "id" => id } when byte_size(id) > 0 ->
+        send(self(), :after_join)
         socket = socket |> assign(:user_id, id) |> assign(:admin, authorized?(Map.get(payload, "secretKey", "")))
         {:ok, socket}
       %{} -> {:ok, socket}
