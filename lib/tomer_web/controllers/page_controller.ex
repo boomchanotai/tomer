@@ -1,7 +1,7 @@
 defmodule TomerWeb.PageController do
   use TomerWeb, :controller
 
-  def home(conn, %{ "id" => id }) do
+  def home(conn, %{ "id" => _id }) do
     # The home page is often custom made,
     # so skip the default app layout.
     render(conn, :home, layout: false, isAdmin: false)
@@ -14,7 +14,7 @@ defmodule TomerWeb.PageController do
     redirect(conn, to: ~p"/?id=#{id}")
   end
 
-  def admin(conn, %{ "id" => id }) do
+  def admin(conn, %{ "id" => _id }) do
     state = Tomer.Room.get()
     render(conn, :home, layout: false, isAdmin: true, state: state)
   end
@@ -25,7 +25,7 @@ defmodule TomerWeb.PageController do
     id = gen_random_id()
     redirect(conn, to: ~p"/admin?id=#{id}")
   end
-  
+
   defp gen_random_id do
     adjs = [
       "fat",

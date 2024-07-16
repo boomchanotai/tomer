@@ -10,7 +10,6 @@ defmodule Tomer.Room do
     {:ok, state}
   end
 
-  @impl true
   def start_link(_) do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
@@ -103,7 +102,8 @@ defmodule Tomer.Room do
     {:reply, newState, newState}
   end
 
-  def handle_info(x, _state) do
+  @impl true
+  def handle_info(_x, _state) do
     newState = %{
       type: :standby,
     }

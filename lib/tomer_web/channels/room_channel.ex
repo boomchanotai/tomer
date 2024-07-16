@@ -84,7 +84,7 @@ defmodule TomerWeb.RoomChannel do
 
   # Running -> Puase
   @impl true
-  def handle_in("chat", %{"content" => content} = payload, socket) do
+  def handle_in("chat", %{"content" => _content} = payload, socket) do
     if !socket.assigns.admin do
       {:noreply, socket}
     else
@@ -94,7 +94,7 @@ defmodule TomerWeb.RoomChannel do
   end
 
   @impl true
-  def handle_in(x, payload, socket) do
+  def handle_in(_x, _payload, socket) do
     IO.puts "Unexpected state"
     {:noreply, socket}
   end
