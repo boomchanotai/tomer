@@ -1,18 +1,27 @@
 # Tomer
 
-To start your Phoenix server:
+## Deployment
+To deploy you need to secret two variable
+- `SECRET_KEY` is the password for logging in
+- `SECRET_KEY_BASE` is internally used for the framework. you can use any alphanumeric mumbo jumbo for this.
+```sh
+docker run \
+  -e SECRET_KEY=<SECRET_KEY> \
+  -e SECRET_KEY_BASE=<SECRET_KEY_BASE> \
+  -p 80:4000
+ghcr.io/imsozrious/tomer:latest
+```
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+Also you need proxy to make it secure (https).
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+# Usage
+let say it is deployed at `www.example.com`.
+## For admin
+The admin route is located at `www.example.com/admin`.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## For user
+The user route is located at `www.example.com`.
 
-## Learn more
+User route can be track (send connect / disconnect notice to admin) if you set query params `id` along with the endpoint (e.g. `https://www.example.com/?id=observer`). Be careful when you sharing the url, the behavior of using the same id is unknown.
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+Another feature is chat, it make one-way communication from admin (top textarea in admin page) to every user connect to the room, user will not received chat by default. It can be enabled with `chat=true` in search params.
