@@ -6,7 +6,7 @@
       class="text-6xl text-pretty text-center py-2 break-all flow-hidden"
     ></p>
   </div>
-  <% end %>
+  <% end %> <%= if !@isLive do %>
   <div
     class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full"
   >
@@ -305,6 +305,8 @@
       </defs>
     </svg>
   </div>
+  <% end %>
+
   <div
     class="absolute p-12 top-0 left-0 w-full h-full flex flex-col justify-between"
   >
