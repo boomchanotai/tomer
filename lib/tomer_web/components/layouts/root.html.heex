@@ -16,7 +16,7 @@
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
-  <body class={["w-full", "h-full", "text-white"] ++ [(if @isLive, do: "bg-black", else: "bg-[#0D0E11]")]}>
+  <body class={["w-full", "h-full", "text-white"] ++ [(if @isLive, do: "bg-transparent", else: "bg-[#0D0E11]")]}>
     <%= @inner_content %>
   </body>
 </html>
